@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QListWidgetItem
+from PySide6.QtWidgets import QApplication, QMainWindow, QListWidgetItem, QStyle
 from job_manager_ui import Ui_MainWindow  # Import the generated UI class
 
 class JobManager(QMainWindow, Ui_MainWindow):
@@ -17,6 +17,8 @@ class JobManager(QMainWindow, Ui_MainWindow):
 
         self.lineEditIterableInput.setText("[1, 2, 3]")
         self.textEditJobInput.setText("print(item)")
+        self.pushButtonStartExecution.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+        self.pushButtonStartExecution.setStyleSheet("background-color: rgb(0, 105, 148);")
 
     def add_job(self):
         code = self.textEditJobInput.toPlainText()
@@ -34,10 +36,8 @@ class JobManager(QMainWindow, Ui_MainWindow):
     def start_execution(self):
         self.clear_results()
         iterable_script = self.lineEditIterableInput.text()
-        iterable = []
+        iterable = None
         try:
-            self.plainTextEditResults.appendPlainText(f"collecting iterable: {iterable_script}")
-            # exec(f'iterable = {iterable_script}', globals(), locals())
             iterable = eval(iterable_script, globals(), locals())
             self.plainTextEditResults.appendPlainText(f"collected iterable: {iterable}")
         except Exception as e:
@@ -53,7 +53,7 @@ class JobManager(QMainWindow, Ui_MainWindow):
             for job in self.jobs:
                 code = job["code"]
                 try:
-                    self.plainTextEditResults.appendPlainText(f"starting job {self.current_job_index + 1}")
+                    self.plainTextEditResults.appendPlainText(f"starting job {self.current_job_index + 1} on item '{item}'")
                     exec(code, globals(), locals())
                     job["status"] = "Done"
                 except Exception as e:
@@ -80,8 +80,10 @@ class JobManager(QMainWindow, Ui_MainWindow):
                 item.setForeground(Qt.red)
             self.listWidgetJobs.addItem(item)
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setStyle("Fusion")
     window = JobManager()
     window.show()
     sys.exit(app.exec_())

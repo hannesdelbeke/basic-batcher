@@ -15,11 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QLabel, QLineEdit,
-    QListWidget, QListWidgetItem, QMainWindow, QMenuBar,
-    QPlainTextEdit, QPushButton, QSizePolicy, QStatusBar,
-    QTextEdit, QToolBar, QVBoxLayout, QWidget)
-
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QHBoxLayout, QLabel,
+    QLineEdit, QListWidget, QListWidgetItem, QMainWindow,
+    QPlainTextEdit, QPushButton, QSizePolicy, QTextEdit,
+    QVBoxLayout, QWidget)
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -49,20 +48,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.textEditJobInput)
 
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.pushButtonAddJob = QPushButton(self.centralwidget)
         self.pushButtonAddJob.setObjectName(u"pushButtonAddJob")
 
-        self.verticalLayout.addWidget(self.pushButtonAddJob)
+        self.horizontalLayout.addWidget(self.pushButtonAddJob)
 
         self.pushButtonRemoveJob = QPushButton(self.centralwidget)
         self.pushButtonRemoveJob.setObjectName(u"pushButtonRemoveJob")
 
-        self.verticalLayout.addWidget(self.pushButtonRemoveJob)
+        self.horizontalLayout.addWidget(self.pushButtonRemoveJob)
 
-        self.pushButtonStartExecution = QPushButton(self.centralwidget)
-        self.pushButtonStartExecution.setObjectName(u"pushButtonStartExecution")
 
-        self.verticalLayout.addWidget(self.pushButtonStartExecution)
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.listWidgetJobs = QListWidget(self.centralwidget)
         self.listWidgetJobs.setObjectName(u"listWidgetJobs")
@@ -71,22 +70,17 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.listWidgetJobs)
 
+        self.pushButtonStartExecution = QPushButton(self.centralwidget)
+        self.pushButtonStartExecution.setObjectName(u"pushButtonStartExecution")
+
+        self.verticalLayout.addWidget(self.pushButtonStartExecution)
+
         self.plainTextEditResults = QPlainTextEdit(self.centralwidget)
         self.plainTextEditResults.setObjectName(u"plainTextEditResults")
 
         self.verticalLayout.addWidget(self.plainTextEditResults)
 
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindow)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 400, 27))
-        MainWindow.setMenuBar(self.menubar)
-        self.toolBar = QToolBar(MainWindow)
-        self.toolBar.setObjectName(u"toolBar")
-        MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
-        self.statusbar = QStatusBar(MainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
 
