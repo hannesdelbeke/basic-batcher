@@ -18,6 +18,9 @@ for obj in bpy.objects:
 
 <img src="https://github.com/hannesdelbeke/basic-batch/assets/3758308/137cd20d-cd19-42eb-915a-4fe2eacb970c" width="350" />
 
+## TODO
+- [ ] save job script, load job from file
+- [ ] same for input / iter
 
 ## Dev
 ensure either PySide6 or 2 is installed
