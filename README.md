@@ -10,8 +10,11 @@ iter input:
 import pathlib;pathlib.Path("C:/my_folder").glob('**/*.blend')
 ```
 
-script input:
+script input: (pseudo code)
 ```python
+import bpy
+
+bpy.load_scene(str(item))
 for obj in bpy.objects:
   print(obj) # TODO check if obj is named correctly
 ```
