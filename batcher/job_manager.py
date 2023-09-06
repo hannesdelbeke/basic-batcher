@@ -1,9 +1,13 @@
+try:
+    from PySide6 import QtWidgets, QtGui, QtCore
+except ImportError:
+    from PySide2 import QtWidgets, QtGui, QtCore
+
 import sys
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QListWidgetItem, QStyle
 from job_manager_ui import Ui_MainWindow  # Import the generated UI class
 
-class JobManager(QMainWindow, Ui_MainWindow):
+
+class JobManager(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -17,7 +21,7 @@ class JobManager(QMainWindow, Ui_MainWindow):
 
         self.lineEditIterableInput.setText("[1, 2, 3]")
         self.textEditJobInput.setText("print(item)")
-        self.pushButtonStartExecution.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
+        self.pushButtonStartExecution.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_MediaPlay))
         self.pushButtonStartExecution.setStyleSheet("background-color: rgb(0, 105, 148);")
 
     def add_job(self):
@@ -71,18 +75,18 @@ class JobManager(QMainWindow, Ui_MainWindow):
         for index, job in enumerate(self.jobs):
             status = job["status"]
             item_text = f"Job {index + 1}: {status}"
-            item = QListWidgetItem(item_text)
+            item = QtWidgets.(item_text)
             if status == "Running":
-                item.setForeground(Qt.blue)
+                item.setForeground(QtCore.Qt.blue)
             elif status == "Done":
-                item.setForeground(Qt.green)
+                item.setForeground(QtCore.Qt.green)
             elif status == "Error":
-                item.setForeground(Qt.red)
+                item.setForeground(QtCore.Qt.red)
             self.listWidgetJobs.addItem(item)
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    app = QtWidgets.(sys.argv)
     app.setStyle("Fusion")
     window = JobManager()
     window.show()

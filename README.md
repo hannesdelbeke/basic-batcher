@@ -20,9 +20,9 @@ for obj in bpy.objects:
 
 
 ## Dev
-ensure PySide6 is installed
+ensure either PySide6 or 2 is installed
 
-Don't edit `job_manager_ui.py`, edit `job_manager.ui` instead and build the ui with 
+Don't edit `job_manager_ui.py`, edit `job_manager.ui` instead and build the ui with (PySide6)
 ```batch
 cd batcher
 pyside6-uic job_manager.ui -o job_manager_ui.py
