@@ -1,8 +1,7 @@
 import sys
-from PySide6.QtCore import Qt, QCoreApplication, QTimer
-from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from job_manager_ui import Ui_MainWindow  # Import the generated UI class
-
 
 class JobManager(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -11,36 +10,75 @@ class JobManager(QMainWindow, Ui_MainWindow):
 
         self.jobs = []
         self.current_job_index = 0
-        self.timer = QTimer()
 
-        self.timer.timeout.connect(self.execute_next_job)
         self.pushButtonAddJob.clicked.connect(self.add_job)
+        self.pushButtonRemoveJob.clicked.connect(self.remove_selected_job)
         self.pushButtonStartExecution.clicked.connect(self.start_execution)
 
+        self.lineEditIterableInput.setText("[1, 2, 3]")
+        self.textEditJobInput.setText("print(item)")
+
     def add_job(self):
-        print("add job")
         code = self.textEditJobInput.toPlainText()
-        self.jobs.append(code)
+        self.jobs.append({"code": code, "status": "Pending"})
         self.textEditJobInput.clear()
+        self.update_job_list()
+
+    def remove_selected_job(self):
+        selected_item = self.listWidgetJobs.currentItem()
+        if selected_item:
+            selected_index = self.listWidgetJobs.row(selected_item)
+            self.jobs.pop(selected_index)
+            self.update_job_list()
 
     def start_execution(self):
-        if not self.timer.isActive():
-            self.execute_next_job()
-            self.timer.start(0)
+        self.clear_results()
+        iterable_script = self.lineEditIterableInput.text()
+        iterable = []
+        try:
+            self.plainTextEditResults.appendPlainText(f"collecting iterable: {iterable_script}")
+            # exec(f'iterable = {iterable_script}', globals(), locals())
+            iterable = eval(iterable_script, globals(), locals())
+            self.plainTextEditResults.appendPlainText(f"collected iterable: {iterable}")
+        except Exception as e:
+            self.plainTextEditResults.appendPlainText(f"Error parsing iterable input: {e}")
+            return
 
-    def execute_next_job(self):
-        if self.current_job_index < len(self.jobs):
-            code = self.jobs[self.current_job_index]
-            try:
-                exec(code)
-            except Exception as e:
-                self.plainTextEditResults.appendPlainText(f"Error executing job: {e}")
+        if not isinstance(iterable, (list, tuple)):
+            self.plainTextEditResults.appendPlainText("Iterable must be a list or tuple.")
+            return
 
-            self.current_job_index += 1
-        else:
-            self.plainTextEditResults.appendPlainText("All jobs processed.")
-            self.timer.stop()
+        self.current_job_index = 0
+        for item in iterable:
+            for job in self.jobs:
+                code = job["code"]
+                try:
+                    self.plainTextEditResults.appendPlainText(f"starting job {self.current_job_index + 1}")
+                    exec(code, globals(), locals())
+                    job["status"] = "Done"
+                except Exception as e:
+                    job["status"] = "Error"
+                    self.plainTextEditResults.appendPlainText(f"Error executing job: {e}")
+            self.update_job_list()
 
+        self.plainTextEditResults.appendPlainText("All jobs processed.")
+
+    def clear_results(self):
+        self.plainTextEditResults.clear()
+
+    def update_job_list(self):
+        self.listWidgetJobs.clear()
+        for index, job in enumerate(self.jobs):
+            status = job["status"]
+            item_text = f"Job {index + 1}: {status}"
+            item = QListWidgetItem(item_text)
+            if status == "Running":
+                item.setForeground(Qt.blue)
+            elif status == "Done":
+                item.setForeground(Qt.green)
+            elif status == "Error":
+                item.setForeground(Qt.red)
+            self.listWidgetJobs.addItem(item)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

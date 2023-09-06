@@ -13,6 +13,23 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <widget class="QLabel" name="labelIterInfo">
+      <property name="text">
+       <string>Python script to generate: iterable = ...</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEditIterableInput"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="labelScriptInfo">
+      <property name="text">
+       <string>Python script to run on the iterable:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QTextEdit" name="textEditJobInput"/>
     </item>
     <item>
@@ -23,9 +40,26 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="pushButtonRemoveJob">
+      <property name="text">
+       <string>Remove Selected Job</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="pushButtonStartExecution">
       <property name="text">
        <string>Start Execution</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QListWidget" name="listWidgetJobs">
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
       </property>
      </widget>
     </item>
