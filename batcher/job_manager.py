@@ -75,7 +75,7 @@ class JobManager(QtWidgets.QMainWindow, Ui_MainWindow):
         for index, job in enumerate(self.jobs):
             status = job["status"]
             item_text = f"Job {index + 1}: {status}"
-            item = QtWidgets.(item_text)
+            item = QtWidgets.QListWidgetItem(item_text)
             if status == "Running":
                 item.setForeground(QtCore.Qt.blue)
             elif status == "Done":
@@ -86,7 +86,7 @@ class JobManager(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
-    app = QtWidgets.(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     app.setStyle("Fusion")
     window = JobManager()
     window.show()
