@@ -1,4 +1,4 @@
-## Basic batch
+## Basic batcher
 A simple batcher for Python.
 
 Example:
