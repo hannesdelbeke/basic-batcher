@@ -1,7 +1,23 @@
 ## Basic batch
 A simple batcher for Python.
 
-- [ ] add more sample code
+Example:
+- You want to rename all meshes in Blender with a script. (Currently easier with Blender's native script editor)
+- For each file in a folder, you want to open this scene, and check naming conventions.  
+
+iter input:
+```python
+import pathlib;pathlib.Path("C:/my_folder").glob('**/*.blend')
+```
+
+script input:
+```python
+for obj in bpy.objects:
+  print(obj) # TODO check if obj is named correctly
+```
+
+<img src="https://github.com/hannesdelbeke/basic-batch/assets/3758308/137cd20d-cd19-42eb-915a-4fe2eacb970c" width="350" />
+
 
 ## Dev
 ensure PySide6 is installed
