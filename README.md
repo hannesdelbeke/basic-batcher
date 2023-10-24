@@ -24,7 +24,14 @@ for obj in bpy.objects:
 ## TODO
 - [ ] save job script, load job from file
 - [ ] same for input / iter
-
+- sample scenarios
+  - validate scenes in a folder
+  - validate scenes from a text file with scene paths
+  - easily select different input configs
+  - run from inside blender, validate multiple scenes. reuse existing blender for speed. if it crashes we lose progress.
+  - run from outside blender, validate multiple scenes. open new blender for each
+  - save progress to log
+  
 ## Dev
 ensure either PySide6 or 2 is installed
 
