@@ -1,5 +1,5 @@
 ## Basic batcher
-A simple batcher for Python.
+A batcher for Python.
 
 Example:
 - You want to rename all meshes in Blender with a script. (Currently easier with Blender's native script editor)
