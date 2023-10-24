@@ -31,6 +31,8 @@ for obj in bpy.objects:
   - run from inside blender, validate multiple scenes. reuse existing blender for speed. if it crashes we lose progress.
   - run from outside blender, validate multiple scenes. open new blender for each
   - save progress to log
+  - continue from a crash
+  - read log in to see results
   
 ## Dev
 ensure either PySide6 or 2 is installed
